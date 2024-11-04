@@ -17,12 +17,18 @@ This project implements a simple client-server application for cloud backup usin
 
 ## Installation
 
-1. **Create a virtual environment**:
+1. **Clone the repository**:
+     ```bash
+     git clone https://github.com/Harsh3006/client-server-cloud-backup.git
+     cd client-server-cloud-backup
+     ```
+     
+2. **Create a virtual environment**:
     ```bash
     python -m venv venv
     ```
 
-2. **Activate the virtual environment**:
+3. **Activate the virtual environment**:
     - On Windows:
         ```bash
         venv\Scripts\activate
@@ -32,7 +38,7 @@ This project implements a simple client-server application for cloud backup usin
         source venv/bin/activate
         ```
 
-3. **Install the required packages**:
+4. **Install the required packages**:
     ```bash
     pip install watchdog
     ```
@@ -51,7 +57,7 @@ This project implements a simple client-server application for cloud backup usin
     ```
    - The client will monitor the specified directory (default is `source`) for any file changes.
 
-3. **Modify or add files** in the specified directory to test the functionality. The client will automatically upload changes to the server.
+3. **Modify or add files** in the specified directory to test the functionality. The repository includes a source folder with a `sample.txt` file for initial testing. You can modify this file or add new files to see the client automatically upload changes to the server.
 
 ## Configuration
 
