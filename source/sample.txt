@@ -1,0 +1,8 @@
+This is a sample text file for testing the cloud backup application.
+Feel free to modify this file to see how the monitoring and uploading works.
+Here are some example lines:
+
+1. First line of the sample text.
+2. Second line of the sample text.
+3. Third line of the sample text.
+4. Fourth line of the sample text.
