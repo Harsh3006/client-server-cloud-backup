@@ -46,22 +46,42 @@ This project implements a simple client-server application for cloud backup usin
 ## Usage
 
 1. **Start the server**:
-    ```bash
+
+   To run the server and make it accessible on your local Wi-Fi network:
+   ```bash
     python server.py
     ```
-   - The server will listen for incoming connections on `localhost:5000` by default.
+   - The server will listen for incoming client connections on the IP address of your machine `(HOST = socket.gethostbyname(socket.gethostname()))` and port 5000 by default.
+
+   - You can find your local IP address by running the following command in your terminal:
+     - On Windows
+
+       ```bash
+       ipconfig
+       ```
+     - On macOS/Linux:
+
+       ```bash
+       ifconfig
+       ```
+
+     Look for the IPv4 address (e.g., 192.168.x.x), which you'll use to connect to the server. In the client, update the SERVER_ADDRESS in `client.py` with the server's local IP.
 
 2. **Run the client**:
+   
     ```bash
     python client.py
     ```
-   - The client will monitor the specified directory (default is `source`) for any file changes.
+   - The client will prompt you for your username and then begin monitoring the specified directory (default is `source`) for file changes.
+
+   - The client will automatically upload modified or newly created files to the server based on the directory you specify.
 
 3. **Modify or add files** in the specified directory to test the functionality. The repository includes a source folder with a `sample.txt` file for initial testing. You can modify this file or add new files to see the client automatically upload changes to the server.
 
 ## Configuration
 
-You can modify the server address and the directory to monitor by editing the constants in `client.py`:
-```python
-SERVER_ADDRESS = ("localhost", 5000)
-DIRECTORY_TO_MONITOR = "source"
+  You can modify the server address and the directory to monitor by editing the constants in `client.py`:
+  ```python
+  SERVER_ADDRESS = ("192.168.x.x", 5000)  # Replace with the server's IP address
+  DIRECTORY_TO_MONITOR = "source" # The directory that the client will monitor for file changes.
+  ```
