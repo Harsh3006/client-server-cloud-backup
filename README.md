@@ -8,6 +8,7 @@ This project implements a simple client-server application for cloud backup usin
 - **Automatic Uploads:** Uploads newly created or modified files to the server.
 - **Initial Backup:** Performs an initial backup of existing files in the directory.
 - **Checksum Verification:** Ensures file integrity with checksum verification.
+- **Multiple Client Handling:** The server can handle multiple clients concurrently, storing each client's files in separate directories.
 
 ## Requirements
 
