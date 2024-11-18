@@ -40,20 +40,21 @@ class FileChangeHandler(FileSystemEventHandler):
             self.sock.recv(1024)  # Wait for acknowledgment
             print(f"Sent file size: {file_size}.")
 
-            hasher = hashlib.sha256()
+            if file_size != 0:
+                hasher = hashlib.sha256()
 
-            # Send the file content in chunks
-            with open(file_path, "rb") as f:
-                while chunk := f.read(4096):
-                    self.sock.sendall(chunk)  # Ensure all data is sent
-                    hasher.update(chunk)
-                self.sock.recv(1024)  # Wait for acknowledgment
+                # Send the file content in chunks
+                with open(file_path, "rb") as f:
+                    while chunk := f.read(4096):
+                        self.sock.sendall(chunk)  # Ensure all data is sent
+                        hasher.update(chunk)
+                    self.sock.recv(1024)  # Wait for acknowledgment
 
-            # Calculate and send the checksum
-            checksum = hasher.hexdigest()
-            self.sock.sendall(f"{checksum}\n".encode())  # Send checksum with newline
-            self.sock.recv(1024)  # Wait for ACK
-            print(f"Uploaded file: {file_name} with checksum {checksum}")
+                # Calculate and send the checksum
+                checksum = hasher.hexdigest()
+                self.sock.sendall(f"{checksum}\n".encode())  # Send checksum with newline
+                self.sock.recv(1024)  # Wait for ACK
+                print(f"Uploaded file: {file_name} with checksum {checksum}")
 
         except Exception as e:
             print(f"Error uploading {file_name}: {e}")

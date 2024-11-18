@@ -55,26 +55,29 @@ def receive_file(client_socket, user_dir):
     hasher = hashlib.sha256()
 
     with open(file_path, "wb") as f:
-        bytes_received = 0
-        while bytes_received < file_size:
-            data = client_socket.recv(4096)
-            if not data:  # Break if no more data is received
-                break
-            f.write(data)
-            hasher.update(data)  # Update checksum
-            bytes_received += len(data)
-            print(f"Bytes received: {bytes_received}/{file_size}")
+        if file_size == 0:
+            print(f"Received and saved empty file: {file_path}")
+        else:
+            bytes_received = 0
+            while bytes_received < file_size:
+                data = client_socket.recv(4096)
+                if not data:  # Break if no more data is received
+                    break
+                f.write(data)
+                hasher.update(data)  # Update checksum
+                bytes_received += len(data)
+                print(f"Bytes received: {bytes_received}/{file_size}")
 
-    client_socket.sendall(b"ACK")  # Send acknowledgment for file reception
+            client_socket.sendall(b"ACK")  # Send acknowledgment for file reception
 
-    # Receive and verify the checksum
-    checksum = client_socket.recv(1024).decode().strip()
-    client_socket.sendall(b"ACK")  # Send acknowledgment
-    received_checksum = hasher.hexdigest()
-    if received_checksum == checksum:
-        print(f"Received and saved file: {file_path} (Checksum verified)")
-    else:
-        print(f"Checksum mismatch for file: {file_path} (Expected: {checksum}, Received: {received_checksum})")
+            # Receive and verify the checksum
+            checksum = client_socket.recv(1024).decode().strip()
+            client_socket.sendall(b"ACK")  # Send acknowledgment
+            received_checksum = hasher.hexdigest()
+            if received_checksum == checksum:
+                print(f"Received and saved file: {file_path} (Checksum verified)")
+            else:
+                print(f"Checksum mismatch for file: {file_path} (Expected: {checksum}, Received: {received_checksum})")
 
 
 def start_server(host, port):
